@@ -20,6 +20,10 @@ test:
   <<: *default
   database: db/test.sqlite3
 
-production:
-  <<: *default
-  database: db/production.sqlite3
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  url:  <%= ENV["DATABASE_URL"] %>
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>

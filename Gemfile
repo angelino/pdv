@@ -1,8 +1,13 @@
 source 'https://rubygems.org'
 
+ruby "2.1.4"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
+# Use Puma as the app server
+gem 'puma'
+# Abort requests that are taking too long
+gem "rack-timeout"
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -27,8 +32,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 
 group :production do
-  # Use Puma as the app server
-  gem 'puma'
+  # Use Postgresql as the database
+  gem 'pg'
 end
 
 group :development, :test do
