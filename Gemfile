@@ -34,6 +34,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :production do
   # Use Postgresql as the database
   gem 'pg'
+  # Enable features such as static asset serving and logging on Heroku
+  gem 'rails_12factor'
 end
 
 group :development, :test do
