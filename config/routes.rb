@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {sessions: 'sessions'}
+
   get 'welcome' => 'welcome#index'
+
+  match '*path', to: 'application#options', :via => :options
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
