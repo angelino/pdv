@@ -8,6 +8,10 @@ gem 'rails', '4.2.1'
 gem 'puma'
 # Abort requests that are taking too long
 gem "rack-timeout"
+
+# Use Devise for authentication
+gem 'devise'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
