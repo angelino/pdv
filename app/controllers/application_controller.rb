@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   ALLOWED_CLIENTS = {
       # Local
-      'http://localhost:5000' => 'http://localhost:3000',
+      'localhost:5000' => 'http://localhost:3000',
       # Heroku
       'https://stormy-meadow-1243.herokuapp.com' => 'https://stormy-meadow-1243-web.herokuapp.com'
   }
