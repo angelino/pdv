@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-ruby "2.1.4"
+ruby '2.1.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use Puma as the app server
 gem 'puma'
 # Abort requests that are taking too long
-gem "rack-timeout"
+gem 'rack-timeout'
 
 # Use Devise for authentication
 gem 'devise'
