@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   match '*path', to: 'application#options', :via => :options
 
-  post '/users/' => 'users#create'
+  #post '/users/' => 'users#create'
   devise_for :users, controllers: {sessions: 'users/sessions'}
 
   get 'welcome' => 'welcome#index'

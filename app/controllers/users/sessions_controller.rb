@@ -1,6 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   respond_to :js, :html, :xml, :json
-  skip_before_filter :verify_authenticity_token
+  skip_before_filter :verify_authenticity_token, :only => [:new, :create]
 
   # GET /resource/sign_in
   def new
