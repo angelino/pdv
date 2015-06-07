@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :point_of_sales
   match '*path', to: 'application#options', :via => :options
 
   #post '/users/' => 'users#create'
