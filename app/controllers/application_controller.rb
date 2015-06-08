@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
       # Local
       'localhost:5000' => 'http://localhost:3000',
       # Heroku
-      'https://api-lafavoritta-easypos.herokuapp.com' => 'https://lafavoritta-easypos.herokuapp.com'
+      'api-lafavoritta-easypos.herokuapp.com' => 'https://lafavoritta-easypos.herokuapp.com'
   }
 
   def authenticate_cors_user
