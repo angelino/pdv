@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
       # Local
       'localhost:5000' => 'http://localhost:3000',
       # Heroku
-      'https://stormy-meadow-1243.herokuapp.com' => 'https://stormy-meadow-1243-web.herokuapp.com'
+      'https://api-lafavoritta-easypos.herokuapp.com' => 'https://lafavoritta-easypos.herokuapp.com/'
   }
 
   def authenticate_cors_user
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def cors_set_access_control_headers
     headers['Access-Control-Allow-Origin'] = ALLOWED_CLIENTS[env['HTTP_HOST']]
-    headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS, PATCH'
     headers['Access-Control-Allow-Headers'] = '*, X-Requested-With, X-Prototype-Version, X-XSRF-TOKEN, Content-Type'
     headers['Access-Control-Allow-Credentials'] = 'true'
     headers['Access-Control-Max-Age'] = '1728000'
