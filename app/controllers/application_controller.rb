@@ -3,11 +3,14 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
 
-  skip_before_filter :verify_authenticity_token, :only => [:options]
-  before_filter :authenticate_cors_user
-  before_filter :cors_set_access_control_headers
+  before_action :authenticate_cors_user
+  before_action :cors_set_access_control_headers
 
-  respond_to :json, :html
+  before_action :authenticate_user!
+
+  skip_before_action :verify_authenticity_token, :only => [:options]
+
+  respond_to :json
 
   ALLOWED_CLIENTS = {
       # Local
