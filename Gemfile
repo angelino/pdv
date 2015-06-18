@@ -30,6 +30,7 @@ gem 'jbuilder', '~> 2.0'
 
 # Allow rails to send the expected CSRF token for Angular.js
 gem 'angular_rails_csrf'
+gem 'activesupport-json_encoder', github: 'rails/activesupport-json_encoder'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
