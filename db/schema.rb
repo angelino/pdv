@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20150618170157) do
     t.string   "image"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "barcode"
     t.string   "public_id"
   end
 
