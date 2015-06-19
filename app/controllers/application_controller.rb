@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token, if: :json_request?
+
   before_action :authenticate_user!
 
   before_action :authenticate_cors_user
@@ -11,9 +13,15 @@ class ApplicationController < ActionController::Base
 
   respond_to :json
 
+  def options
+    render :json => {data: 'success'}, :status => 200
+  end
+
+  protected
+
   ALLOWED_CLIENTS = {
       # Local
-      'localhost:5000' => 'http://localhost:3000',
+      'localhost:5000' => 'http://127.0.0.1:3000',
       # Heroku
       'api-lafavoritta-easypos.herokuapp.com' => 'https://lafavoritta-easypos.herokuapp.com'
   }
@@ -33,7 +41,7 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Max-Age'] = '1728000'
   end
 
-  def options
-    render :json => {data: 'success'}, :status => 200
+  def json_request?
+    request.format.json?
   end
 end
