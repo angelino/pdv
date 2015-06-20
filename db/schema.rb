@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618170157) do
+ActiveRecord::Schema.define(version: 20150620205116) do
 
   create_table "point_of_sales", force: :cascade do |t|
     t.string   "name"
@@ -29,6 +29,18 @@ ActiveRecord::Schema.define(version: 20150618170157) do
     t.string   "barcode"
     t.string   "public_id"
   end
+
+  create_table "storage_entries", force: :cascade do |t|
+    t.string   "reason"
+    t.integer  "quantity"
+    t.integer  "point_of_sale_id"
+    t.integer  "product_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "storage_entries", ["point_of_sale_id"], name: "index_storage_entries_on_point_of_sale_id"
+  add_index "storage_entries", ["product_id"], name: "index_storage_entries_on_product_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

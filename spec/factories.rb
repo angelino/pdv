@@ -1,4 +1,10 @@
-FactoryGirl.define do
+FactoryGirl.define do  factory :storage_entry do
+    reason "MyString"
+quantity 1
+point_of_sale nil
+product nil
+  end
+
   # factory :user do
   #   first_name "John"
   #   last_name  "Doe"
