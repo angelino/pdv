@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   #post '/users/' => 'users#create'
   devise_for :users, controllers: {sessions: 'users/sessions'}
 
-  get 'welcome' => 'welcome#index'
+  get 'point_of_sales/:id/storage' => 'storage#show'
+  # post 'point_of_sales/:id/storage' => 'storage#create'
+
+  # get 'point_of_sales/:id/storage/item/:product_id' => 'storage#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
