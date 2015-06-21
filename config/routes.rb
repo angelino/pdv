@@ -1,16 +1,18 @@
 Rails.application.routes.draw do
+
   resources :storage_entries
   resources :products
   resources :point_of_sales
+
   match '*path', to: 'application#options', :via => :options
 
-  #post '/users/' => 'users#create'
   devise_for :users, controllers: {sessions: 'users/sessions'}
 
   get 'point_of_sales/:id/storage' => 'storage#show'
   # post 'point_of_sales/:id/storage' => 'storage#create'
-
   # get 'point_of_sales/:id/storage/item/:product_id' => 'storage#index'
+
+  get 'point_of_sales/:id/menu' => 'menus#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
