@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :storage_entries
   resources :products
   resources :point_of_sales
 
@@ -8,11 +7,17 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: {sessions: 'users/sessions'}
 
-  get 'point_of_sales/:id/storage' => 'storage#show'
-  # post 'point_of_sales/:id/storage' => 'storage#create'
-  # get 'point_of_sales/:id/storage/item/:product_id' => 'storage#index'
+  get 'point_of_sales/:id/storage' => 'storages#show', as: :storage
 
-  get 'point_of_sales/:id/menu' => 'menus#show'
+  get 'point_of_sales/:id/storage/entries' => 'storage_entries#index', as: :storage_entries
+  post 'point_of_sales/:id/storage/entries' => 'storage_entries#create'
+
+  # Mobile API
+  # FIXME: Change to appropriate controllers
+  # TODO: Bypass the Authentication
+  get 'diners' => 'diners#index'
+  get 'diners/:id' => 'diners#show'
+  get 'diners/:id/menu' => 'menus#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

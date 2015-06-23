@@ -4,26 +4,13 @@ class StorageEntriesController < ApplicationController
   # GET /storage_entries
   # GET /storage_entries.json
   def index
-    @storage_entries = StorageEntry.all
-  end
-
-  # GET /storage_entries/1
-  # GET /storage_entries/1.json
-  def show
-  end
-
-  # GET /storage_entries/new
-  def new
-    @storage_entry = StorageEntry.new
-  end
-
-  # GET /storage_entries/1/edit
-  def edit
+    @storage_entries = StorageEntry.where(point_of_sale_id: params[:id])
   end
 
   # POST /storage_entries
   # POST /storage_entries.json
   def create
+    # FIXME: Get :point_of_sale_id of params before save
     @storage_entry = StorageEntry.new(storage_entry_params)
 
     respond_to do |format|
@@ -57,13 +44,9 @@ class StorageEntriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_storage_entry
-      @storage_entry = StorageEntry.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def storage_entry_params
-      params.require(:storage_entry).permit(:reason, :quantity, :point_of_sale_id, :product_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def storage_entry_params
+    params.require(:storage_entry).permit(:reason, :quantity, :product_id)
+  end
 end
