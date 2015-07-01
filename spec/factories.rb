@@ -1,4 +1,8 @@
-FactoryGirl.define do  factory :storage_entry do
+FactoryGirl.define do  factory :image do
+    owner nil
+public_id "MyString"
+  end
+  factory :storage_entry do
     reason "MyString"
 quantity 1
 point_of_sale nil

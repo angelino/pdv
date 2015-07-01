@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150620205116) do
+ActiveRecord::Schema.define(version: 20150701173630) do
+
+  create_table "images", force: :cascade do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "public_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "images", ["owner_type", "owner_id"], name: "index_images_on_owner_type_and_owner_id"
 
   create_table "point_of_sales", force: :cascade do |t|
     t.string   "name"
@@ -23,10 +33,8 @@ ActiveRecord::Schema.define(version: 20150620205116) do
     t.string   "name"
     t.text     "description"
     t.decimal  "price",       precision: 8, scale: 2
-    t.string   "image"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "public_id"
     t.string   "barcode"
   end
 

@@ -24,10 +24,14 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(product_params)
+    ActiveRecord::Base.transaction do
+      @product = Product.new(product_params)
+      @product.save!
+      @product.images << Image.where(id: params['images'].collect{|img| img.select{|k,v| ['id'].include? k}.values})
+    end
 
     respond_to do |format|
-      if @product.save
+      if @product.persisted?
         format.json { render :show, status: :created, location: @product }
       else
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -64,6 +68,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :description, :price, :image, :public_id, :barcode)
+      params.require(:product).permit(:name, :description, :price, :barcode, images:[])
     end
 end

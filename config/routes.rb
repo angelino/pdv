@@ -7,8 +7,9 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: {sessions: 'users/sessions'}
 
-  get 'point_of_sales/:id/storage' => 'storages#show', as: :storage
+  post 'images' => 'images#create'
 
+  get 'point_of_sales/:id/storage' => 'storages#show', as: :storage
   get 'point_of_sales/:id/storage/entries' => 'storage_entries#index', as: :storage_entries
   post 'point_of_sales/:id/storage/entries' => 'storage_entries#create'
 
