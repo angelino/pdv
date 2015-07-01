@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20150620205116) do
     t.string   "image"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "barcode"
     t.string   "public_id"
+    t.string   "barcode"
   end
 
   create_table "storage_entries", force: :cascade do |t|
