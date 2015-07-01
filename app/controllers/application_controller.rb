@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
     render :json => {data: 'success'}, :status => 200
   end
 
+  rescue_from Exception do |exception|
+    render :json => {errors:{message: exception.to_s}}, :status => 500
+  end
+
   protected
 
   ALLOWED_CLIENTS = {

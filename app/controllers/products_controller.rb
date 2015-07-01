@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
     ActiveRecord::Base.transaction do
       @product = Product.new(product_params)
       @product.save!
-      @product.images << Image.where(id: params['images'].collect{|img| img.select{|k,v| ['id'].include? k}.values})
+      @product.images << Image.where(id: params['images'].collect{|img| img.select{|k,v| ['id'].include? k}.values}) if params['images'] && params['images'].size > 0
     end
 
     respond_to do |format|
