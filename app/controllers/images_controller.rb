@@ -1,10 +1,18 @@
 class ImagesController < ApplicationController
 
-  # POST /products.json
+  # POST /images.json
   def create
     @image = Image.create!(image_params)
 
-    render json: @image.as_json
+    render json: @image.as_json(except: [:created_at])
+  end
+
+  # DELETE /images/:id.json
+  def destroy
+    @image = Image.find(params[:id])
+    @image.destroy!
+
+    render json: @image.as_json(except: [:created_at])
   end
 
   private

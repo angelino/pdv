@@ -1,5 +1,10 @@
 class Image < ActiveRecord::Base
   belongs_to :owner, polymorphic: true
+  before_destroy :destroy_at_cloudinary
+
+  def destroy_at_cloudinary
+    Cloudinary::Uploader.destroy(self.public_id) if self.public_id
+  end
 
   def url
     "http://#{default_cloudinary_url}#{self.public_id}"
