@@ -1,13 +1,4 @@
-FactoryGirl.define do  factory :image do
-    owner nil
-public_id "MyString"
-  end
-  factory :storage_entry do
-    reason "MyString"
-quantity 1
-point_of_sale nil
-product nil
-  end
+FactoryGirl.define do
 
   # factory :user do
   #   first_name "John"
@@ -26,7 +17,19 @@ product nil
     name "Product"
   end
 
+  factory :image do
+    owner :product
+    public_id "MyString"
+  end
+
   factory :point_of_sale do
     name "Point of Sale"
+  end
+
+  factory :storage_entry do
+    reason "MyString"
+    quantity 1
+    point_of_sale :point_of_sale
+    product :product
   end
 end
