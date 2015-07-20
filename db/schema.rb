@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150701173630) do
+ActiveRecord::Schema.define(version: 20150720093848) do
 
   create_table "images", force: :cascade do |t|
     t.integer  "owner_id"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20150701173630) do
     t.integer  "product_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.date     "movement_date"
   end
 
   add_index "storage_entries", ["point_of_sale_id"], name: "index_storage_entries_on_point_of_sale_id"

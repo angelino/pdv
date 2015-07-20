@@ -10,12 +10,13 @@ class StorageEntriesController < ApplicationController
   # POST /storage_entries
   # POST /storage_entries.json
   def create
-    # FIXME: Get :point_of_sale_id of params before save
+    # FIXME: Get :point_of_sale_id of params before save (done?)
     @storage_entry = StorageEntry.new(storage_entry_params)
+    @storage_entry.point_of_sale = PointOfSale.find(params[:id])
 
     respond_to do |format|
       if @storage_entry.save
-        format.json { render :show, status: :created, location: @storage_entry }
+        format.json { render :show, status: :created }
       else
         format.json { render json: @storage_entry.errors, status: :unprocessable_entity }
       end
@@ -47,6 +48,6 @@ class StorageEntriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def storage_entry_params
-    params.require(:storage_entry).permit(:reason, :quantity, :product_id)
+    params.require(:storage_entry).permit(:movement_date, :reason, :quantity, :product_id)
   end
 end

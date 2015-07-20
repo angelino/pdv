@@ -34,7 +34,7 @@ class Storage
   def build_item(product_id)
     # FIXME:
     product = Product.find(product_id)
-    quantity = product.storage_entries.sum(:quantity)
+    quantity = product.quantity(point_of_sale)
 
     StorageItem.new(product, quantity)
   end
