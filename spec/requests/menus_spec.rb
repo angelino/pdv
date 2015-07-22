@@ -17,16 +17,17 @@ RSpec.describe "Menus API", type: :request do
 
       body = JSON.parse(response.body)
 
-      expect(body[0]['id']).to eq(diner.id)
-      expect(body[0]['name']).to eq(product.name)
-      expect(body[0]['price']).to eq(product.price)
-      expect(body[0]['images']).to match_array([
+      item = body.first
+      expect(item['product']['id']).to eq(diner.id)
+      expect(item['product']['name']).to eq(product.name)
+      expect(item['product']['price']).to eq(product.price)
+      expect(item['product']['images']).to match_array([
         { "thumbnail_url"=>"http://res.cloudinary.com/msitbrasil/image/upload/t_media_lib_thumb/exemplo",
           "url"=>"http://res.cloudinary.com/msitbrasil/image/upload/exemplo" }
       ])
     end
 
-    it "return a list of all menu items no images" do
+    it "return a list of all menu items with no images" do
       diner = FactoryGirl.create :point_of_sale, name: 'Nespresso Coffee'
       product = FactoryGirl.create :product, name: 'Coffee', price: 4
       storage_entry = FactoryGirl.create :storage_entry, quantity: 100,
@@ -39,10 +40,11 @@ RSpec.describe "Menus API", type: :request do
 
       body = JSON.parse(response.body)
 
-      expect(body[0]['id']).to eq(diner.id)
-      expect(body[0]['name']).to eq(product.name)
-      expect(body[0]['price']).to eq(product.price)
-      expect(body[0]['images']).to match_array([])
+      item = body.first
+      expect(item['product']['id']).to eq(diner.id)
+      expect(item['product']['name']).to eq(product.name)
+      expect(item['product']['price']).to eq(product.price)
+      expect(item['product']['images']).to match_array([])
     end
   end
 
