@@ -32,4 +32,13 @@ FactoryGirl.define do
     point_of_sale :point_of_sale
     product :product
   end
+
+  factory :user do
+    email "exemplo@gmail.com"
+  end
+
+  factory :sale do
+    user :user
+    point_of_sale :point_of_sale
+  end
 end
