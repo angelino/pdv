@@ -3,21 +3,20 @@ class SalesController < ApplicationController
   end
 
   def create
-    # ActiveRecord::Base.transaction do
-    #   @product = Product.new(product_params)
-    #   @product.save!
-    #   @product.images << Image.where(id: params['images'].collect{|img| img.select{|k,v| ['id'].include? k}.values}) if params['images'] && params['images'].size > 0
-    # end
+    puts ">>> #{params}" # Just for debug/dev
 
-    # respond_to do |format|
-    #   if @product.persisted?
-    #     format.json { render :show, status: :created, location: @product }
-    #   else
-    #     format.json { render json: @product.errors, status: :unprocessable_entity }
-    #   end
-    # end
-    puts params
+    current_user = User.first # FAKE just for development
+    @sale = SaleService.new(current_user).create!(params)
 
-    format.json { render :show, status: :created, location: Sale.create }
+    respond_to do |format|
+      if @sale.persisted?
+        format.json { render :show, status: :created, location: sale_path(sales_id: @sale.id) }
+      else
+        format.json { render json: @sale.errors, status: :unprocessable_entity }
+      end
+    end
+
+    # @sale = Sale.create
+    # render json: { status: :created }
   end
 end

@@ -1,0 +1,74 @@
+class SaleService
+  attr_reader :current_user
+
+  def initialize(current_user)
+    @current_user = current_user
+  end
+
+  # Create a new sale based on params:
+  #
+  # {
+  #   "items" => [
+  #     {
+  #       "product_id" => "1",
+  #       "quantidade" => "1"
+  #     },
+  #   ],
+  #   "commercial_conditions" => []
+  # }
+  def create!(params)
+    ActiveRecord::Base.transaction do
+      # TODO: Security problem - mass assign
+      items_params = params[:items]
+      puts ">>> #{items_params}"
+
+      storage = Storage.new(point_of_sale_id: params[:point_of_sale_id])
+      puts ">>> #{storage.inspect}"
+
+      puts ">>> #{current_user}"
+      sale = Sale.new(point_of_sale_id: params[:point_of_sale_id], user_id: current_user.id)
+      sale.save!
+
+      items_params.each do |item_params|
+        puts ">>> #{item_params}"
+        puts ">>> #{item_params['product_id']}"
+
+        storage_item = storage.find_item(product_id: item_params['product_id'])
+        puts ">>> Item found on Storage... #{storage_item.inspect}"
+
+        if (storage_item && ((storage_item.quantity - item_params[:quantity].to_i) >= 0))
+
+          # storage_entries
+          #   product_id
+          #   point_of_sales_id
+          #   reason
+          #   quantity
+          storage_entry = StorageEntry.new(product_id:       storage_item.product.id,
+                                           point_of_sale_id: storage.point_of_sale.id,
+                                           reason:           'SALE',
+                                           quantity:         (-(item_params[:quantity]).to_i))
+          puts ">>> #{storage_entry.inspect}"
+
+          storage_entry.save!
+
+          # sale_entries
+          #   sale_id = nil
+          #   price_at_date
+          #   storage_entry_id
+          #   quantity
+          sale_entry = SaleEntry.new(sale_id:          sale.id,
+                                     price_at_date:    storage_item.product.price,
+                                     storage_entry_id: storage_entry.id,
+                                     quantity:         item_params[:quantity])
+          sale_entry.save!
+        else
+          # FIXME: What about use ActiveSupport::Inflector.pluralize(word) ?????
+          raise "Product with ID #{item_params[:product_id]} is not available in Storage. There is(are) only #{storage_item.quantity} unit(s)"
+        end
+
+        puts ">>> #{sale.inspect} created"
+        return sale
+      end
+    end
+  end
+end

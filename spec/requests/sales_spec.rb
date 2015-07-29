@@ -19,7 +19,7 @@ RSpec.describe "Sales", type: :request do
         "items" => [
           {
             "product_id" => "#{@product.id}",
-            "quantidade" => "1"
+            "quantity" => "1"
           },
         ],
         "commercial_conditions" => [
@@ -28,8 +28,8 @@ RSpec.describe "Sales", type: :request do
 
       post "/point_of_sales/#{@pos.id}/sales", body, headers
 
-      # puts response.to_a
-      # puts response.body
+      puts response.to_a
+      puts response.body
 
       expect(response).to have_http_status(200)
     end

@@ -17,11 +17,15 @@ class Storage
     product_ids.collect { |product_id| build_item(product_id) }
   end
 
-  private
+  def find_item(product_id:)
+    build_item(product_id)
+  end
 
   def point_of_sale
     @point_of_sale ||= PointOfSale.find(@point_of_sale_id)
   end
+
+  private
 
   def storage_entries
     point_of_sale.storage_entries

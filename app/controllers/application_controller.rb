@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token, if: :valid_cookies_sent?
   skip_before_action :verify_authenticity_token, :only => [:options]
 
-  before_action :authenticate_user!
-  skip_before_action :authenticate_user!, :only => [:options]
+  # before_action :authenticate_user!
+  # skip_before_action :authenticate_user!, :only => [:options]
 
   before_action :cors_set_access_control_headers
 
