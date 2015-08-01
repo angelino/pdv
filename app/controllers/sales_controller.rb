@@ -5,7 +5,6 @@ class SalesController < ApplicationController
   def create
     puts ">>> #{params}" # Just for debug/dev
 
-    current_user = User.first # FAKE just for development
     @sale = SaleService.new(current_user).create!(params)
 
     respond_to do |format|
