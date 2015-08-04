@@ -35,6 +35,7 @@ FactoryGirl.define do
 
   factory :user do
     email "exemplo@gmail.com"
+    password "lucas_cabecao"
   end
 
   factory :sale do

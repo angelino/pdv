@@ -9,7 +9,7 @@ class SalesController < ApplicationController
 
     respond_to do |format|
       if @sale.persisted?
-        format.json { render :show, status: :created, location: sale_path(sales_id: @sale.id) }
+        format.json { render json: @sale.as_json, status: :created }
       else
         format.json { render json: @sale.errors, status: :unprocessable_entity }
       end

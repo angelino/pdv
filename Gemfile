@@ -69,4 +69,3 @@ group :development, :test do
   gem 'faker'
   gem 'populator'
 end
-
