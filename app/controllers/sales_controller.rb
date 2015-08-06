@@ -3,7 +3,7 @@ class SalesController < ApplicationController
   end
 
   def create
-    puts ">>> #{params}" # Just for debug/dev
+    logger.debug ">>> #{params}" # Just for debug/dev
 
     @sale = SaleService.new(current_user).create!(params)
 
@@ -15,7 +15,5 @@ class SalesController < ApplicationController
       end
     end
 
-    # @sale = Sale.create
-    # render json: { status: :created }
   end
 end

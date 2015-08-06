@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   # POST users
   def create
-    puts params
+    logger.debug params
     user = User.create(user_params)
     render json: user.as_json
   end

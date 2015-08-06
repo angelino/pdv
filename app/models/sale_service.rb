@@ -19,7 +19,7 @@ class SaleService
   def create!(params)
     ActiveRecord::Base.transaction do
       # TODO: Security problem - mass assign
-      items_params = params[:items]
+      items_params = params.require(:items)
       puts ">>> #{items_params}"
 
       storage = Storage.new(point_of_sale_id: params[:point_of_sale_id])

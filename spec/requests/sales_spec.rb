@@ -18,7 +18,7 @@ RSpec.describe "Sales", type: :request do
   describe "POST /sales" do
     it "works!" do
       headers = {
-
+          'Accept' => Mime::JSON
       }
 
       body = {
@@ -30,15 +30,12 @@ RSpec.describe "Sales", type: :request do
         ],
         "commercial_conditions" => [
         ]
-      }.to_json
+      }
 
       sign_in(user)
       post "/point_of_sales/#{@pos.id}/sales", body, headers
 
-      puts response.to_a
-      puts response.body
-
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:created)
     end
   end
 end
