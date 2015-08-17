@@ -1,0 +1,10 @@
+pt-BR:
+  activerecord:
+    models:
+      sale:
+        one: Venda
+        other: Vendas
+    attributes:
+      point_of_sale:
+        name: Nome
+
