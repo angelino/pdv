@@ -1,10 +1,16 @@
 pt-BR:
   activerecord:
     models:
-      sale:
-        one: Venda
-        other: Vendas
+      # FIXME: Model names translation doesn't work
+      image: Imagem
+      point_of_sale: Ponto de Venda
+      product: Produto
+      sale: Venda
+      sale_entry: Lançamento de Venda
+      storage_entry: Lançamento de Estoque
     attributes:
       point_of_sale:
         name: Nome
+      storage_entry:
+        movement_date: "Data do Lançamento"
 
