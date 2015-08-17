@@ -22,11 +22,11 @@ class SaleService
       items_params = params.require(:items)
       puts ">>> #{items_params}"
 
-      storage = Storage.new(point_of_sale_id: params[:point_of_sale_id])
+      storage = Storage.new(point_of_sale_id: params[:id])
       puts ">>> #{storage.inspect}"
 
       puts ">>> #{current_user}"
-      sale = Sale.new(point_of_sale_id: params[:point_of_sale_id], user_id: current_user.id)
+      sale = Sale.new(point_of_sale_id: params[:id], user_id: current_user.id)
       sale.save!
 
       items_params.each do |item_params|

@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   get 'point_of_sales/:id/storage/entries' => 'storage_entries#index', as: :storage_entries
   post 'point_of_sales/:id/storage/entries' => 'storage_entries#create'
 
-  post 'point_of_sales/:point_of_sale_id/sales' => 'sales#create'
-  get 'point_of_sales/:point_of_sale_id/sales/:sales_id' => 'sales#show', as: :sale
+  post 'point_of_sales/:id/sales' => 'sales#create'
+  get 'point_of_sales/:id/sales/:sales_id' => 'sales#show', as: :sale
 
   # Mobile API
   # FIXME: Change to appropriate controllers

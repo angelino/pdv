@@ -3,7 +3,7 @@ class SalesController < ApplicationController
   end
 
   def create
-    logger.debug ">>> #{params}" # Just for debug/dev
+    logger.debug ">>> #{params}"
 
     @sale = SaleService.new(current_user).create!(params)
 

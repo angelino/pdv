@@ -10,7 +10,6 @@ class StorageEntriesController < ApplicationController
   # POST /storage_entries
   # POST /storage_entries.json
   def create
-    # FIXME: Get :point_of_sale_id of params before save (done?)
     @storage_entry = StorageEntry.new(storage_entry_params)
     @storage_entry.point_of_sale = PointOfSale.find(params[:id])
 
