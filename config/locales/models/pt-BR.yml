@@ -1,16 +1,45 @@
 pt-BR:
   activerecord:
     models:
-      # FIXME: Model names translation doesn't work
-      image: Imagem
-      point_of_sale: Ponto de Venda
-      product: Produto
-      sale: Venda
-      sale_entry: Lançamento de Venda
-      storage_entry: Lançamento de Estoque
+      # FIXME: Models' names translations doesn't work
+      image:
+        one: Imagem
+        other: Imagens
+      point_of_sale:
+        one: Ponto de Venda
+        other: Pontos de Venda
+      product:
+        one: Produto
+        other: Produtos
+      sale:
+        one: Venda
+        other: Vendas
+      sale_entry:
+        one: Lançamento de Venda
+        other: Lançamentos de Vendas
+      storage_entry:
+        one: Lançamento de Estoque
+        other: Lançamentos de Estoque
     attributes:
       point_of_sale:
         name: Nome
+      product:
+        name: Nome
+        description: Descrição
+        price: Preço
+        barcode: Código de Barras
+      sale:
+        saller: Vendedor
+        point_of_sale: Ponto de Venda
+      sale_entry:
+        sale: Venda
+        storage_entry: Lançamento de Estoque
+        quantity: Quantidade
+        price_at_date: Preço na data
       storage_entry:
-        movement_date: "Data do Lançamento"
+        movement_date: Data do Lançamento
+        reason: Motivo
+        quantity: Quantidade
+        point_of_sale: Ponto de Venda
+        product: Produto
 
