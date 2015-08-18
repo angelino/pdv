@@ -1,4 +1,8 @@
 pt-BR:
+  storage:
+    product:
+      not_available: "Produto com ID %{product_id} não está disponível no Estoque."
+      insuficient_quantity: "Quantidade insuficiente do produto disponível no estoque. Existe(m) %{quantity} unidade(s) do produto com ID %{product_id}."
   activerecord:
     models:
       # FIXME: Models' names translations doesn't work

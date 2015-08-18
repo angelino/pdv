@@ -62,8 +62,9 @@ class SaleService
                                      quantity:         item_params[:quantity])
           sale_entry.save!
         else
-          # FIXME: What about use ActiveSupport::Inflector.pluralize(word) ?????
-          raise "Product with ID #{item_params[:product_id]} is not available in Storage. There is(are) only #{storage_item.quantity} unit(s)"
+          raise I18n.translate("storage.product.insuficient_quantity",
+                               product_id: item_params[:product_id],
+                               quantity: storage_item.quantity)
         end
 
         puts ">>> #{sale.inspect} created"
