@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20150815224548) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "images", force: :cascade do |t|
     t.integer  "owner_id"
     t.string   "owner_type"
@@ -24,7 +21,7 @@ ActiveRecord::Schema.define(version: 20150815224548) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "images", ["owner_type", "owner_id"], name: "index_images_on_owner_type_and_owner_id", using: :btree
+  add_index "images", ["owner_type", "owner_id"], name: "index_images_on_owner_type_and_owner_id"
 
   create_table "point_of_sales", force: :cascade do |t|
     t.string   "name"
@@ -50,8 +47,8 @@ ActiveRecord::Schema.define(version: 20150815224548) do
     t.datetime "updated_at",       null: false
   end
 
-  add_index "sale_entries", ["sale_id"], name: "index_sale_entries_on_sale_id", using: :btree
-  add_index "sale_entries", ["storage_entry_id"], name: "index_sale_entries_on_storage_entry_id", using: :btree
+  add_index "sale_entries", ["sale_id"], name: "index_sale_entries_on_sale_id"
+  add_index "sale_entries", ["storage_entry_id"], name: "index_sale_entries_on_storage_entry_id"
 
   create_table "sales", force: :cascade do |t|
     t.integer  "user_id"
@@ -70,8 +67,8 @@ ActiveRecord::Schema.define(version: 20150815224548) do
     t.date     "movement_date"
   end
 
-  add_index "storage_entries", ["point_of_sale_id"], name: "index_storage_entries_on_point_of_sale_id", using: :btree
-  add_index "storage_entries", ["product_id"], name: "index_storage_entries_on_product_id", using: :btree
+  add_index "storage_entries", ["point_of_sale_id"], name: "index_storage_entries_on_point_of_sale_id"
+  add_index "storage_entries", ["product_id"], name: "index_storage_entries_on_product_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -89,13 +86,7 @@ ActiveRecord::Schema.define(version: 20150815224548) do
     t.boolean  "admin"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
-  add_foreign_key "sale_entries", "sales"
-  add_foreign_key "sale_entries", "storage_entries"
-  add_foreign_key "sales", "point_of_sales"
-  add_foreign_key "sales", "users"
-  add_foreign_key "storage_entries", "point_of_sales"
-  add_foreign_key "storage_entries", "products"
 end
