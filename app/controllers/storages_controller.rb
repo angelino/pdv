@@ -8,6 +8,6 @@ class StoragesController < ApplicationController
   private
 
   def set_storage
-    @storage = Storage.new(point_of_sale_id: params[:point_of_sale_id])
+    @storage = Storage.new(point_of_sale_id: params[:id])
   end
 end

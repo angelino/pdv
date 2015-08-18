@@ -22,11 +22,11 @@ class SaleService
       items_params = params.require(:items)
       puts ">>> #{items_params}"
 
-      storage = Storage.new(point_of_sale_id: params[:point_of_sale_id])
+      storage = Storage.new(point_of_sale_id: params[:id])
       puts ">>> #{storage.inspect}"
 
       puts ">>> #{current_user}"
-      sale = Sale.new(point_of_sale_id: params[:point_of_sale_id], user_id: current_user.id)
+      sale = Sale.new(point_of_sale_id: params[:id], user_id: current_user.id)
       sale.save!
 
       items_params.each do |item_params|
@@ -62,8 +62,9 @@ class SaleService
                                      quantity:         item_params[:quantity])
           sale_entry.save!
         else
-          # FIXME: What about use ActiveSupport::Inflector.pluralize(word) ?????
-          raise "Product with ID #{item_params[:product_id]} is not available in Storage. There is(are) only #{storage_item.quantity} unit(s)"
+          raise I18n.translate("storage.product.insuficient_quantity",
+                               product_id: item_params[:product_id],
+                               quantity: storage_item.quantity)
         end
 
         puts ">>> #{sale.inspect} created"
