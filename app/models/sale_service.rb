@@ -46,7 +46,8 @@ class SaleService
           storage_entry = StorageEntry.new(product_id:       storage_item.product.id,
                                            point_of_sale_id: storage.point_of_sale.id,
                                            reason:           'SALE',
-                                           quantity:         (-(item_params[:quantity]).to_i))
+                                           quantity:         (-(item_params[:quantity]).to_i),
+                                           movement_date:    Time.zone.now)
           puts ">>> #{storage_entry.inspect}"
 
           storage_entry.save!
