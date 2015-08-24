@@ -1,5 +1,5 @@
 class StorageItem
-  attr_reader :product, :quantity
+  attr_reader :product, :quantity, :images
 
   def initialize(product, quantity)
     @product = product
