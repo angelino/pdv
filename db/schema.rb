@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150815224548) do
+ActiveRecord::Schema.define(version: 20150826014846) do
 
   create_table "images", force: :cascade do |t|
     t.integer  "owner_id"
@@ -57,18 +57,36 @@ ActiveRecord::Schema.define(version: 20150815224548) do
     t.datetime "updated_at",       null: false
   end
 
+  create_table "stock_entry_types", force: :cascade do |t|
+    t.string   "reason"
+    t.boolean  "plus_minus_marker"
+    t.boolean  "sell_marker"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
   create_table "storage_entries", force: :cascade do |t|
     t.string   "reason"
     t.integer  "quantity"
     t.integer  "point_of_sale_id"
     t.integer  "product_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.date     "movement_date"
+    t.integer  "storage_entry_type_id"
   end
 
   add_index "storage_entries", ["point_of_sale_id"], name: "index_storage_entries_on_point_of_sale_id"
   add_index "storage_entries", ["product_id"], name: "index_storage_entries_on_product_id"
+  add_index "storage_entries", ["storage_entry_type_id"], name: "index_storage_entries_on_storage_entry_type_id"
+
+  create_table "storage_entry_types", force: :cascade do |t|
+    t.string   "reason"
+    t.boolean  "plus_minus_marker"
+    t.boolean  "sell_marker"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

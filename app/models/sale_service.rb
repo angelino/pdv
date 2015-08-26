@@ -36,41 +36,42 @@ class SaleService
         storage_item = storage.find_item(product_id: item_params['product_id'])
         puts ">>> Item found on Storage... #{storage_item.inspect}"
 
-        if (storage_item && ((storage_item.quantity - item_params[:quantity].to_i) >= 0))
+        raise I18n.translate("storage.product.insuficient_quantity",
+                             product_id: item_params[:product_id],
+                             quantity: storage_item.quantity) if (!storage_item || ((storage_item.quantity - item_params[:quantity].to_i) < 0))
 
-          # storage_entries
-          #   product_id
-          #   point_of_sales_id
-          #   reason
-          #   quantity
-          storage_entry = StorageEntry.new(product_id:       storage_item.product.id,
-                                           point_of_sale_id: storage.point_of_sale.id,
-                                           reason:           'SALE',
-                                           quantity:         (-(item_params[:quantity]).to_i),
-                                           movement_date:    Time.zone.now)
-          puts ">>> #{storage_entry.inspect}"
+        # storage_entries
+        #   product_id
+        #   point_of_sales_id
+        #   reason
+        #   quantity
+        storage_entry = StorageEntry.new(product_id:       storage_item.product.id,
+                                         point_of_sale_id: storage.point_of_sale.id,
+                                         storage_entry_type_id:        self.find_parameterized_reason_id!,
+                                         quantity:         (-(item_params[:quantity]).to_i),
+                                         movement_date:    Time.zone.now)
+        puts ">>> #{storage_entry.inspect}"
 
-          storage_entry.save!
+        storage_entry.save!
 
-          # sale_entries
-          #   sale_id = nil
-          #   price_at_date
-          #   storage_entry_id
-          #   quantity
-          sale_entry = SaleEntry.new(sale_id:          sale.id,
-                                     price_at_date:    storage_item.product.price,
-                                     storage_entry_id: storage_entry.id,
-                                     quantity:         item_params[:quantity])
-          sale_entry.save!
-        else
-          raise I18n.translate("storage.product.insuficient_quantity",
-                               product_id: item_params[:product_id],
-                               quantity: storage_item.quantity)
-        end
+        # sale_entries
+        #   sale_id = nil
+        #   price_at_date
+        #   storage_entry_id
+        #   quantity
+        sale_entry = SaleEntry.new(sale_id:          sale.id,
+                                   price_at_date:    storage_item.product.price,
+                                   storage_entry_id: storage_entry.id,
+                                   quantity:         item_params[:quantity])
+        sale_entry.save!
 
         puts ">>> #{sale.inspect} created"
         return sale
       end
     end
   end
+  private
+    def find_parameterized_reason_id!
+      StorageEntryType.find_by_sell_marker!(true)
+    end
 end

@@ -1,4 +1,9 @@
-FactoryGirl.define do
+FactoryGirl.define do  factory :storage_entry_type do
+    reason "MyString"
+plus_minus_marker false
+sell_marker false
+  end
+
 
   # factory :user do
   #   first_name "John"
