@@ -20,21 +20,21 @@ class SaleService
     ActiveRecord::Base.transaction do
       # TODO: Security problem - mass assign
       items_params = params.require(:items)
-      puts ">>> #{items_params}"
+      Rails.logger.info ">>> #{items_params}"
 
       storage = Storage.new(point_of_sale_id: params[:id])
-      puts ">>> #{storage.inspect}"
+      Rails.logger.info ">>> #{storage.inspect}"
 
-      puts ">>> #{current_user}"
+      Rails.logger.info ">>> #{current_user}"
       sale = Sale.new(point_of_sale_id: params[:id], user_id: current_user.id)
       sale.save!
 
       items_params.each do |item_params|
-        puts ">>> #{item_params}"
-        puts ">>> #{item_params['product_id']}"
+        Rails.logger.info ">>> #{item_params}"
+        Rails.logger.info ">>> #{item_params['product_id']}"
 
         storage_item = storage.find_item(product_id: item_params['product_id'])
-        puts ">>> Item found on Storage... #{storage_item.inspect}"
+        Rails.logger.info ">>> Item found on Storage... #{storage_item.inspect}"
 
         raise I18n.translate("storage.product.insuficient_quantity",
                              product_id: item_params[:product_id],
@@ -45,12 +45,12 @@ class SaleService
         #   point_of_sales_id
         #   reason
         #   quantity
-        storage_entry = StorageEntry.new(product_id:       storage_item.product.id,
-                                         point_of_sale_id: storage.point_of_sale.id,
-                                         storage_entry_type_id:        self.find_parameterized_reason_id!,
-                                         quantity:         (-(item_params[:quantity]).to_i),
-                                         movement_date:    Time.zone.now)
-        puts ">>> #{storage_entry.inspect}"
+        storage_entry = StorageEntry.new(product_id:            storage_item.product.id,
+                                         point_of_sale_id:      storage.point_of_sale.id,
+                                         storage_entry_type:    find_parameterized_sell_reason!,
+                                         quantity:              item_params[:quantity].to_i,
+                                         movement_date:         Time.zone.now)
+        Rails.logger.info ">>> #{storage_entry.inspect}"
 
         storage_entry.save!
 
@@ -65,13 +65,14 @@ class SaleService
                                    quantity:         item_params[:quantity])
         sale_entry.save!
 
-        puts ">>> #{sale.inspect} created"
+        Rails.logger.info ">>> #{sale.inspect} created"
         return sale
       end
     end
   end
+
   private
-    def find_parameterized_reason_id!
+    def find_parameterized_sell_reason!
       StorageEntryType.find_by_sell_marker!(true)
     end
 end

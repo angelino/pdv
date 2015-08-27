@@ -1,10 +1,4 @@
-FactoryGirl.define do  factory :storage_entry_type do
-    reason "MyString"
-plus_minus_marker false
-sell_marker false
-  end
-
-
+FactoryGirl.define do
   # factory :user do
   #   first_name "John"
   #   last_name  "Doe"
@@ -20,6 +14,7 @@ sell_marker false
 
   factory :product do
     name "Product"
+    barcode "123456--qualquer coisa eu aceito"
   end
 
   factory :image do
@@ -32,10 +27,23 @@ sell_marker false
   end
 
   factory :storage_entry do
-    reason "MyString"
+    association :storage_entry_type, factory: :storage_entry_type
     quantity 1
     point_of_sale :point_of_sale
     product :product
+    movement_date Date.today
+  end
+
+  factory :storage_entry_type do
+    reason "Add product at storage"
+    plus_minus_marker true
+    sell_marker false
+  end
+
+  factory :sell_storage_entry_type, class: StorageEntryType do
+    reason "Sell Of Product"
+    plus_minus_marker false
+    sell_marker true
   end
 
   factory :user do

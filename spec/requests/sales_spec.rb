@@ -11,8 +11,9 @@ RSpec.describe "Sales", type: :request do
     @pos = FactoryGirl.create :point_of_sale, name: 'Bar do Alemão'
     @product = FactoryGirl.create :product, name: 'Kibe', price: 3.0
     @storage_entry = FactoryGirl.create :storage_entry, quantity: 20,
-                                                         product: @product,
-                                                         point_of_sale: @pos
+                                                        product: @product,
+                                                        point_of_sale: @pos
+    FactoryGirl.create :sell_storage_entry_type
   end
 
   describe "POST /sales" do
