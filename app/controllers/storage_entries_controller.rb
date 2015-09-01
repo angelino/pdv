@@ -47,6 +47,6 @@ class StorageEntriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def storage_entry_params
-    params.require(:storage_entry).permit(:movement_date, :reason, :quantity, :product_id)
+    params.require(:storage_entry).permit(:movement_date, :quantity, :product_id, :storage_entry_type_id)
   end
 end

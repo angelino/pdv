@@ -1,0 +1,1 @@
+json.extract! @storage_entry_type, :id, :reason, :plus_minus_marker, :sell_marker

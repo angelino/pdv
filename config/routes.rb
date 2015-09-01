@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :products
   resources :point_of_sales
+  resources :storage_entry_types
 
   match '*path', to: 'application#options', :via => :options
 
