@@ -38,7 +38,7 @@ class SaleService
 
         raise I18n.translate("storage.product.insuficient_quantity",
                              product_id: item_params[:product_id],
-                             quantity: storage_item.quantity) if (!storage_item || ((storage_item.quantity - item_params[:quantity].to_i) < 0))
+                             quantity: storage_item.quantity) if (!storage_item || (storage_item.quantity < item_params[:quantity].to_i.abs))
 
         # storage_entries
         #   product_id
@@ -48,7 +48,7 @@ class SaleService
         storage_entry = StorageEntry.new(product_id:            storage_item.product.id,
                                          point_of_sale_id:      storage.point_of_sale.id,
                                          storage_entry_type:    find_parameterized_sell_reason!,
-                                         quantity:              item_params[:quantity].to_i,
+                                         quantity:              item_params[:quantity].to_i.abs * -1,
                                          movement_date:         Time.zone.now)
         Rails.logger.info ">>> #{storage_entry.inspect}"
 
