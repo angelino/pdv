@@ -1,0 +1,1 @@
+json.extract! @financial_account, :id, :name
