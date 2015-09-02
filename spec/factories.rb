@@ -1,5 +1,12 @@
-FactoryGirl.define do  factory :financial_account do
-    name "MyString"
+FactoryGirl.define do  factory :account_entry do
+    value ""
+value ""
+date "2015-09-01"
+origin nil
+financial_account nil
+  end
+  factory :financial_account do
+    name "Financial Account"
   end
 
   # factory :user do

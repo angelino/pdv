@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150901175823) do
+ActiveRecord::Schema.define(version: 20150901214429) do
+
+  create_table "account_entries", force: :cascade do |t|
+    t.decimal  "value",                precision: 8, scale: 2
+    t.date     "date"
+    t.integer  "origin_id"
+    t.string   "origin_type"
+    t.integer  "financial_account_id"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "account_entries", ["financial_account_id"], name: "index_account_entries_on_financial_account_id"
+  add_index "account_entries", ["origin_type", "origin_id"], name: "index_account_entries_on_origin_type_and_origin_id"
 
   create_table "financial_accounts", force: :cascade do |t|
     t.string   "name"

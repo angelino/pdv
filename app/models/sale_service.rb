@@ -14,7 +14,11 @@ class SaleService
   #       "quantidade" => "1"
   #     },
   #   ],
-  #   "commercial_conditions" => []
+  #   "commercial_conditions" => [],
+  #   "payment_methods" => [
+  #     {"financial_account_id" => "1", "value" => "10"},
+  #     {"financial_account_id" => "2", "value" => "10"}
+  #   ]
   # }
   def create!(params)
     ActiveRecord::Base.transaction do
@@ -64,10 +68,18 @@ class SaleService
                                    storage_entry_id: storage_entry.id,
                                    quantity:         item_params[:quantity])
         sale_entry.save!
-
-        Rails.logger.info ">>> #{sale.inspect} created"
-        return sale
       end
+
+      raise Exception, 'Total pago insuficiente para quitar venda.' unless (params[:payment_methods] && sale.value == params[:payment_methods].sum{|p| p[:value].to_d})
+      params[:payment_methods].each do |payment_method|
+        financial_account = FinancialAccount.find(payment_method[:financial_account_id])
+        AccountEntry.create!( value: payment_method[:value].to_d,
+                              date: Time.now,
+                              origin: sale,
+                              financial_account: financial_account )
+      end
+      Rails.logger.info ">>> #{sale.inspect} created"
+      return sale
     end
   end
 

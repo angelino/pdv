@@ -14,6 +14,7 @@ RSpec.describe "Sales", type: :request do
                                                         product: @product,
                                                         point_of_sale: @pos
     FactoryGirl.create :sell_storage_entry_type
+    @financial_account = FactoryGirl.create :financial_account
   end
 
   describe "POST /sales" do
@@ -27,9 +28,15 @@ RSpec.describe "Sales", type: :request do
           {
             "product_id" => "#{@product.id}",
             "quantity" => "1"
-          },
+          }
         ],
         "commercial_conditions" => [
+        ],
+        "payment_methods" => [
+            {
+                "financial_account_id" => @financial_account.id,
+                "value" => 3.0
+            }
         ]
       }
 
