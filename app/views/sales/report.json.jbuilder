@@ -9,5 +9,4 @@ json.array!(@sales) do |sale|
       end
     end
   end
-
 end

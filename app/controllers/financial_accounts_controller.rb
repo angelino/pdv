@@ -1,5 +1,5 @@
 class FinancialAccountsController < ApplicationController
-  before_action :set_financial_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_financial_account, only: [:show, :edit, :update, :destroy, :cash_report]
 
   # GET /financial_accounts
   # GET /financial_accounts.json
@@ -54,6 +54,14 @@ class FinancialAccountsController < ApplicationController
     respond_to do |format|
       format.json { head :no_content }
     end
+  end
+
+  # GET /financial_accounts/:id/cash_report.json
+  def cash_report
+    start_date = params[:start_date].to_date
+    end_date = params[:end_date].to_date
+
+    @account_entries = AccountEntry.from_account(@financial_account.id).on_period(start_date, end_date).complete
   end
 
   private

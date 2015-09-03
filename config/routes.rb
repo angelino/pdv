@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :products
   resources :point_of_sales
   resources :storage_entry_types
+  get 'financial_accounts/:id/cash_report' => 'financial_accounts#cash_report', as: :account_cash_report
   resources :financial_accounts
 
   match '*path', to: 'application#options', :via => :options

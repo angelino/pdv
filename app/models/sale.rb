@@ -5,6 +5,7 @@ class Sale < ActiveRecord::Base
   belongs_to :saller, class_name: 'User', foreign_key: 'user_id'
   belongs_to :point_of_sale
   has_many :sale_entries, dependent: :destroy
+  has_many :account_entries, -> { where('account_entries.origin_type = ?', 'Sale') }, :class_name => "AccountEntry", :foreign_key => "origin_id"
 
   scope :on_period, lambda{|start_date, end_date| where('created_at >= ? and created_at <= ?', start_date, end_date)}
   scope :complete, -> { includes(sale_entries: :product) }

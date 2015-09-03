@@ -3,5 +3,5 @@ class PointOfSale < ActiveRecord::Base
 
   has_many :storage_entries, dependent: :restrict_with_error
   has_many :sales, dependent: :restrict_with_error
-
+  has_many :account_entries, through: :sales
 end
