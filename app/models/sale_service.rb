@@ -83,6 +83,10 @@ class SaleService
     end
   end
 
+  def report(start_date, end_date, point_of_sale_id)
+    Sale.where(point_of_sale_id: point_of_sale_id).on_period(start_date, end_date).complete
+  end
+
   private
     def find_parameterized_sell_reason!
       StorageEntryType.find_by_sell_marker!(true)

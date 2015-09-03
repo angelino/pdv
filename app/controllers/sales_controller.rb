@@ -14,6 +14,14 @@ class SalesController < ApplicationController
         format.json { render json: @sale.errors, status: :unprocessable_entity }
       end
     end
-
   end
+
+  def report
+    start_date = params[:start_date].to_date
+    end_date = params[:end_date].to_date
+    point_of_sale_id = params[:id].to_i
+
+    @sales = SaleService.new(current_user).report(start_date, end_date, point_of_sale_id)
+  end
+
 end
