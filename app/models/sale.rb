@@ -7,6 +7,6 @@ class Sale < ActiveRecord::Base
   has_many :sale_entries, dependent: :destroy
 
   def value
-    self.sale_entries.sum(:price_at_date)
+    self.sale_entries.collect{|sale_entry| sale_entry.quantity * sale_entry.price_at_date}.sum
   end
 end
