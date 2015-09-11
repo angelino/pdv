@@ -9,5 +9,5 @@ class AccountEntry < ActiveRecord::Base
   scope :from_account, lambda { |account_id| where(:financial_account_id => account_id) }
   scope :from_point_of_sale, lambda { |pos_id| where('sales.point_of_sale_id = ?', pos_id) }
   scope :on_period, lambda{|start_date, end_date| where('date >= ? and date <= ?', start_date, end_date)}
-  scope :complete, -> { includes(sale: :point_of_sale).includes(:financial_account) }
+  scope :complete, -> { joins(sale: :point_of_sale).includes(sale: :point_of_sale).includes(:financial_account) }
 end

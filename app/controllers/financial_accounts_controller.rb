@@ -60,8 +60,12 @@ class FinancialAccountsController < ApplicationController
   def cash_report
     start_date = params[:start_date].to_date
     end_date = params[:end_date].to_date
+    point_of_sale_id = PointOfSale.find(params[:point_of_sale_id])
 
-    @account_entries = AccountEntry.from_account(@financial_account.id).on_period(start_date, end_date).complete
+    @account_entries =  AccountEntry.where('point_of_sales.id = ?', point_of_sale_id)
+                                    .from_account(@financial_account.id)
+                                    .on_period(start_date, end_date)
+                                    .complete
   end
 
   private
