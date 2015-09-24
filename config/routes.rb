@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   post 'point_of_sales/:id/storage/entries' => 'storage_entries#create'
 
   post 'point_of_sales/:id/sales' => 'sales#create'
-  get 'point_of_sales/:id/sales/report' => 'sales#report', as: :sales_report
+  get 'point_of_sales/:id/sells/report' => 'sales#report', as: :sells_report
   get 'point_of_sales/:id/sales/:sales_id' => 'sales#show', as: :sale
 
   # Mobile API
