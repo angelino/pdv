@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
@@ -30,7 +31,11 @@ class ApplicationController < ActionController::Base
   }
 
   def cors_set_access_control_headers
-    headers['Access-Control-Allow-Origin'] = ALLOWED_CLIENTS[env['HTTP_HOST']]
+    if mobile_device?
+      headers['Access-Control-Allow-Origin'] = '*'
+    else
+      headers['Access-Control-Allow-Origin'] = ALLOWED_CLIENTS[env['HTTP_HOST']]
+    end
     headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS, PATCH'
     headers['Access-Control-Allow-Headers'] = '*, X-Requested-With, X-Prototype-Version, Content-Type'
     headers['Access-Control-Allow-Credentials'] = 'true'
@@ -40,4 +45,9 @@ class ApplicationController < ActionController::Base
   def valid_cookies_sent?
     valid_authenticity_token?(session, cookies['XSRF-TOKEN'])
   end
+
+  def mobile_device?
+    request.user_agent =~ /Mobile|webOS/
+  end
+
 end
