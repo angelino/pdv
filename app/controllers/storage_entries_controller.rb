@@ -4,7 +4,8 @@ class StorageEntriesController < ApplicationController
   # GET /storage_entries
   # GET /storage_entries.json
   def index
-    @storage_entries = StorageEntry.where(point_of_sale_id: params[:id])
+    filters = JSON.parse(params[:search]) if(params[:search])
+    @count, @storage_entries = filter_helper('all', params[:page], 50, filters)
   end
 
   # POST /storage_entries
@@ -45,8 +46,25 @@ class StorageEntriesController < ApplicationController
 
   private
 
+  def filter_helper(named_scope_name, page, page_size, filters)
+    storage_entry = StorageEntry.send(named_scope_name)
+    if filters
+      order_by = filters['ordened'] || ['storage_entries.movement_date']
+
+      storage_entry = storage_entry.by_reason(filters['reason']['id']) if filters['reason'].present?
+      storage_entry = storage_entry.by_product(filters['product']['id']) if filters['product'].present?
+
+      min_date = filters['minDate'].present? ? filters['minDate'].to_date : 10.years.ago.to_date
+      max_date = filters['maxDate'].present? ? filters['maxDate'].to_date : 10.years.from_now.to_date
+      storage_entry = storage_entry.by_movement_date(min_date,max_date)
+    end
+
+    return storage_entry.count, storage_entry.order(order_by).page(page).per(page_size)
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def storage_entry_params
-    params.require(:storage_entry).permit(:movement_date, :quantity, :product_id, :storage_entry_type_id)
+    params.require(:storage_entry)
+          .permit(:movement_date, :quantity, :product_id, :storage_entry_type_id)
   end
 end

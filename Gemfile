@@ -39,6 +39,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 # image dealing
 gem 'cloudinary'
+#pagination
+gem 'kaminari'
 
 group :production do
   # Use Postgresql as the database
