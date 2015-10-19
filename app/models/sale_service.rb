@@ -87,6 +87,17 @@ class SaleService
     Sale.where(point_of_sale_id: point_of_sale_id).on_period(start_date, end_date).complete
   end
 
+  def grouped_report(start_date, end_date, point_of_sale_id)
+    Sale.joins(:sale_entries)
+        .where("sales.point_of_sale_id = ?", point_of_sale_id)
+        .on_period(start_date, end_date + 1.day)
+        .group("date(sales.created_at)")
+        .order("date(sales.created_at)")
+        .select("date(sales.created_at) as sales.created_at")
+        .sum("sale_entries.price_at_date*sale_entries.quantity")
+        .map{|k,v| {date: k, value: v} }
+  end
+
   private
     def find_parameterized_sell_reason!
       StorageEntryType.find_by_sell_marker!(true)

@@ -24,4 +24,12 @@ class SalesController < ApplicationController
     @sales = SaleService.new(current_user).report(start_date, end_date, point_of_sale_id)
   end
 
+  def grouped_report
+    start_date = params[:start_date].to_date
+    end_date = params[:end_date].to_date
+    point_of_sale_id = params[:id].to_i
+
+    @sales_groups = SaleService.new(current_user).grouped_report(start_date, end_date, point_of_sale_id)
+  end
+
 end
